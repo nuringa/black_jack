@@ -26,14 +26,14 @@ class Game
   def deal_cards
     @players.each do |player|
       card = @deck.deck.delete(@deck.deck.sample)
-      player.hand.push(card)
+      player.hand.cards << card
     end
   end
 
   def hand_status
     @players.each do |player|
-      hand_status_message
-      puts player.hand.each(&:to_s)
+      hand_status_message(player)
+      puts player.hand.cards.map { |card| "#{card.rank}#{card.suite}" }.join(', ')
     end
   end
 end

@@ -5,7 +5,7 @@ class User
   def initialize(name = 'Dealer')
     @name = name
     @bank = 100
-    @hand = []
+    @hand = Hand.new
     @points = 0
   end
 

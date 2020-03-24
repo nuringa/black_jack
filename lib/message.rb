@@ -9,7 +9,7 @@ module Message
     sleep 1
   end
 
-  def hand_status_message
-    puts 'Cards in hand:'
+  def hand_status_message(player)
+    puts "Cards in #{player.name}'s hand:"
   end
 end
