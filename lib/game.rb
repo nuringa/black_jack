@@ -34,6 +34,7 @@ class Game
     @players.each do |player|
       hand_status_message(player)
       puts player.hand.cards.map { |card| "#{card.rank}#{card.suite}" }.join(', ')
+      puts player.hand.hand_points
     end
   end
 end
