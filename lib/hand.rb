@@ -1,5 +1,5 @@
 class Hand
-  attr_accessor :cards
+  attr_accessor :cards, :points
 
   POINTS = {
       "2"=>2, "3"=>3, "4"=>4, "5"=>5, "6"=>6, "7"=>7, "8"=>8, "9"=>9,
@@ -7,10 +7,17 @@ class Hand
   }
 
   def initialize
+    @points = 0
     @cards = []
   end
 
   def hand_points
-    cards.sum { |card| POINTS[card.rank] }
+    points = cards.sum { |card| POINTS[card.rank] }
+
+    if cards.detect { |card| card.ace? } && points > 21
+      self.points -= 10
+    else
+      points
+    end
   end
 end

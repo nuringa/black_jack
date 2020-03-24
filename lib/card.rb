@@ -6,6 +6,10 @@ class Card
     @suite = suite
   end
 
+  def ace?
+    rank == 'Ace'
+  end
+
   # def to_s
   #   "#{rank}#{suite}"
   # end

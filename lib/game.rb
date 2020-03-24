@@ -5,9 +5,9 @@ class Game
   attr_accessor :deck
 
   def initialize
-    wellcome_message
-    name = gets.chomp
-    @players = [User.new(name), User.new]
+    # wellcome_message
+    # name = gets.chomp
+    @players = [User.new('name'), User.new]
     @deck = Deck.new
     game_flow
   end
@@ -34,7 +34,7 @@ class Game
     @players.each do |player|
       hand_status_message(player)
       puts player.hand.cards.map { |card| "#{card.rank}#{card.suite}" }.join(', ')
-      puts player.hand.hand_points
+      hand_points_message(player)
     end
   end
 end
