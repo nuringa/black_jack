@@ -5,4 +5,8 @@ class Card
     @rank = rank
     @suite = suite
   end
+
+  def to_s
+    "#{rank} of #{suite}"
+  end
 end
