@@ -4,4 +4,20 @@ require_relative 'lib/deck.rb'
 require_relative 'lib/game.rb'
 require_relative 'lib/player.rb'
 
-Game.new
+include Message
+
+def one_more_game(players)
+  another_game_message
+  user_choice = gets.to_i
+  if user_choice == 1
+    Game.new(players)
+  end
+end
+
+# wellcome_message
+# name = gets.chomp
+players = {human_player: Player.new('name'), dealer: Player.new}
+
+Game.new(players)
+one_more_game(players)
+

@@ -6,7 +6,11 @@ module Message
 
   def dealing_message
     puts 'Dealing cards, please wait.'
-    sleep 1
+    # sleep 1
+  end
+
+  def bet_message(player)
+    puts "#{player.name}, you have: #{player.bank}$ left in your bank."
   end
 
   def hand_status_message(player)
@@ -42,5 +46,18 @@ module Message
 
   def win_message(player)
     puts "Congratulations #{player.name}! You have won!"
+  end
+
+  def lose_message(player)
+    puts "Unlucky day, #{player.name}! You've lost!"
+  end
+
+  def bankrupt_message(player)
+    puts "Sorry #{player.name}! You are a bankrupt!"
+  end
+
+  def another_game_message
+    puts 'One more game?'
+    puts '1. Yes  2. No'
   end
 end

@@ -4,17 +4,10 @@ class Game
   attr_reader :players
   attr_accessor :deck
 
-  def initialize
-    # wellcome_message
-    # name = gets.chomp
-    # dealing_message
-    @players = {human_player: Player.new('name'), dealer: Player.new}
+  def initialize(players)
+    @players = players
     @deck = Deck.new
     @game_status = 0
-    game_flow
-  end
-
-  def game_flow
     game_round
   end
 
@@ -36,11 +29,26 @@ class Game
   end
 
   def first_round
+    dealing_message
     2.times do
       deal_card(players[:human_player])
       deal_card(players[:dealer])
     end
+    game_bet
     hand_status
+  end
+
+  def game_bet
+    @players.each_value do |player|
+      if player.bankrupt?
+        @game_status = 1
+        bankrupt_message(player)
+        return
+      else
+        player.bet
+        bet_message(player)
+      end
+    end
   end
 
   def deal_card(player)
@@ -74,26 +82,29 @@ class Game
 
   def game_result
     hand_status
-    human_points = @players[:human_player].points
-    dealer_points = @players[:dealer].points
-    human_points != dealer_points ? win_check(human_points, dealer_points) : draw_check(human_points, dealer_points)
-  end
+    human_points = players[:human_player].points
+    dealer_points = players[:dealer].points
 
-  def draw_check(human_points, dealer_points)
-    unless (points = human_points == dealer_points)
-      return
+    players.each_value do |player|
+      player.points = 0
+      player.hand = []
     end
 
-    points == 21 ? draw_win_message : draw_lose_message
+    human_points != dealer_points ? win_check(human_points, dealer_points) : draw_check(human_points)
+  end
+
+  def draw_check(human_points)
+    human_points == 21 ? draw_win_message : draw_lose_message
   end
 
   def win_check(human_points, dealer_points)
-    if human_points > 21 && dealer_points > 21
-      draw_lose_message
-    elsif human_points == 21 || human_points > dealer_points
-      win_message(@players[:human_player])
+
+    if human_points > 21
+      lose_message(players[:human_player])
+    elsif human_points <= 21 && (human_points > dealer_points || dealer_points > 21)
+      win_message(players[:human_player])
     else
-      win_message(@players[:dealer])
+      win_message(players[:dealer])
     end
   end
 end

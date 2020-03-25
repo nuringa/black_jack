@@ -18,6 +18,14 @@ class Player
     hand << card
   end
 
+  def bet
+    self.bank -= 10
+  end
+
+  def bankrupt?
+    bank <= 0
+  end
+
   def dealer?
     name == 'Dealer'
   end
