@@ -19,5 +19,9 @@ end
 players = {human_player: Player.new('name'), dealer: Player.new}
 
 Game.new(players)
-one_more_game(players)
+user_choice = 0
+
+until user_choice == 2 do
+  one_more_game(players)
+end
 
