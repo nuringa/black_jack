@@ -1,4 +1,6 @@
 class Player
+  include Message
+
   attr_reader :name
   attr_accessor :bank, :hand, :points
 
@@ -26,10 +28,6 @@ class Player
     bank <= 0
   end
 
-  def dealer?
-    name == 'Dealer'
-  end
-
   def full_hand?
     hand.size == 3
   end
@@ -41,10 +39,24 @@ class Player
   def count_points
     @points = hand.sum { |card| POINTS[card.rank] }
 
-    if hand.detect { |card| card.ace? } && points > 21
+    if hand.detect(&:ace?) && points > 21
       @points -= 10
     else
       @points
     end
+  end
+
+  def erase_data
+    self.points = 0
+    self.hand = []
+  end
+
+  def money_back
+    self.bank += 10
+  end
+
+  def receive_prize
+    receive_prize_message(self)
+    self.bank += 20
   end
 end

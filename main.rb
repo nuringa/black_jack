@@ -6,22 +6,13 @@ require_relative 'lib/player.rb'
 
 include Message
 
-def one_more_game(players)
+welcome_message
+players = { human_player: Player.new(gets.chomp), dealer: Player.new }
+Game.new(players)
+
+user_choice = 0
+until user_choice == 2
   another_game_message
   user_choice = gets.to_i
-  if user_choice == 1
-    Game.new(players)
-  end
+  Game.new(players) if user_choice == 1
 end
-
-# wellcome_message
-# name = gets.chomp
-players = {human_player: Player.new('name'), dealer: Player.new}
-
-Game.new(players)
-user_choice = 0
-
-until user_choice == 2 do
-  one_more_game(players)
-end
-

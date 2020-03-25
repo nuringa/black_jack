@@ -1,12 +1,12 @@
 module Message
-  def wellcome_message
+  def welcome_message
     puts 'Hello my friend, Lets play BlackJack'
     puts 'What\'s your name:'
   end
 
   def dealing_message
     puts 'Dealing cards, please wait.'
-    # sleep 1
+    sleep 1
   end
 
   def bet_message(player)
@@ -59,5 +59,17 @@ module Message
   def another_game_message
     puts 'One more game?'
     puts '1. Yes  2. No'
+  end
+
+  def money_back_message
+    puts 'Players get their 10$ back.'
+  end
+
+  def receive_prize_message(player)
+    puts "#{player.name}, you receive your $20 prize"
+  end
+
+  def bank_total_message(players)
+    puts "Player's total: $#{players[:human_player].bank}$. Dealer's total: $#{players[:dealer].bank}$"
   end
 end
