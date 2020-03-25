@@ -8,24 +8,27 @@ class Game
     # wellcome_message
     # name = gets.chomp
     # dealing_message
-    @players = [User.new('name'), User.new]
+    @players = {human_player: Player.new('name'), dealer: Player.new}
     @deck = Deck.new
+    @game_status = 0
     game_flow
   end
 
   def game_flow
     game_round
-    # check_round_result
   end
 
   def game_round
     first_round if @deck.full?
-    next_round
-    hand_status
+
+    until @game_status == 1 do
+      next_round
+    end
+    game_result
   end
 
   def hand_status
-    @players.each do |player|
+    @players.each do |_role, player|
       hand_status_message(player)
       puts player.hand.map { |card| "#{card.rank}#{card.suite}" }.join(', ')
       hand_points_message(player)
@@ -33,9 +36,9 @@ class Game
   end
 
   def first_round
-    @players.each do |player|
-      deal_card(player)
-      deal_card(player)
+    2.times do
+      deal_card(players[:human_player])
+      deal_card(players[:dealer])
     end
     hand_status
   end
@@ -46,38 +49,51 @@ class Game
   end
 
   def next_round
-    player_choose_action
-    dealer_choose_action
-    hand_status
+    player_choose_action(players[:human_player])
+    dealer_choose_action(players[:dealer])
   end
 
-  def check_round_result
-    # points = player.points
-  end
-
-  def player_choose_action
+  def player_choose_action(player)
     choose_action_message
     choice = gets.to_i
     case choice
     when 1
-      deal_card(@players[0])
+      deal_card(player)
+      @game_status = 1 if player.full_hand? || player.max_points?
     when 2
       return
     when 3
-      game_result
-    else
-      wrong_input_message
+      @game_status = 1
     end
   end
 
-  def dealer_choose_action
-    if @players[1].points < 17
-      deal_card(@players[1])
-      p @deck.cards.count
-    end
+  def dealer_choose_action(dealer)
+    deal_card(dealer) if dealer.points < 17
+    @game_status = 1 if dealer.full_hand?
   end
 
   def game_result
-    puts 'game result TODO'
+    hand_status
+    human_points = @players[:human_player].points
+    dealer_points = @players[:dealer].points
+    human_points != dealer_points ? win_check(human_points, dealer_points) : draw_check(human_points, dealer_points)
+  end
+
+  def draw_check(human_points, dealer_points)
+    unless (points = human_points == dealer_points)
+      return
+    end
+
+    points == 21 ? draw_win_message : draw_lose_message
+  end
+
+  def win_check(human_points, dealer_points)
+    if human_points > 21 && dealer_points > 21
+      draw_lose_message
+    elsif human_points == 21 || human_points > dealer_points
+      win_message(@players[:human_player])
+    else
+      win_message(@players[:dealer])
+    end
   end
 end

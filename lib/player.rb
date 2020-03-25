@@ -1,4 +1,4 @@
-class User
+class Player
   attr_reader :name
   attr_accessor :bank, :hand, :points
 
@@ -20,6 +20,14 @@ class User
 
   def dealer?
     name == 'Dealer'
+  end
+
+  def full_hand?
+    hand.size == 3
+  end
+
+  def max_points?
+    points == 21
   end
 
   def count_points

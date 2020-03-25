@@ -27,4 +27,20 @@ module Message
   def wrong_input_message
     puts 'Sorry, you have made incorrect input'
   end
+
+  def game_over_message
+    puts 'This game is over'
+  end
+
+  def draw_win_message
+    puts 'Congratulations! You both win!'
+  end
+
+  def draw_lose_message
+    puts 'Oops! You both lose!'
+  end
+
+  def win_message(player)
+    puts "Congratulations #{player.name}! You have won!"
+  end
 end
