@@ -20,13 +20,15 @@ class Game
     bank_total_message(@players)
   end
 
-  def hand_status
-    @players.each do |_role, player|
-      hand_status_message(player)
-      puts player.hand.map { |card| "#{card.rank}#{card.suite}" }.join(', ')
-      hand_points_message(player)
-    end
-  end
+  # def hand_status
+  #   @players.each do |_role, player|
+  #     hand_status_message(player)
+  #     puts player.hand.map { |card| "#{card.rank}#{card.suite}" }.join(', ')
+  #     hand_points_message(player)
+  #   end
+  # end
+
+
 
   def first_round
     game_bet
@@ -35,7 +37,8 @@ class Game
       deal_card(players[:human_player])
       deal_card(players[:dealer])
     end
-    hand_status
+    players[:human_player].open_hand
+    players[:dealer].hide_hand
   end
 
   def game_bet
@@ -81,7 +84,9 @@ class Game
   end
 
   def game_result
-    hand_status
+    game_over_message
+    players[:human_player].open_hand
+    players[:dealer].open_hand
     human_points = players[:human_player].points
     dealer_points = players[:dealer].points
 
