@@ -17,13 +17,13 @@ class Interface
 
   def open_hand(player)
     hand_status_message(player)
-    puts player.hand.map { |card| "#{card.rank}#{card.suite}" }.join(', ')
+    puts player.hand.cards.map { |card| "#{card.rank}#{card.suite}" }.join(', ')
     hand_points_message(player)
   end
 
   def hide_hand(player)
     hand_status_message(player)
-    puts '*** ' * player.hand.size
+    puts '*** ' * player.hand.cards.size
   end
 
   def player_choose_action

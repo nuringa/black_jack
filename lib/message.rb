@@ -18,7 +18,7 @@ module Message
   end
 
   def hand_points_message(player)
-    puts "Total points: #{player.count_points}"
+    puts "Total points: #{player.hand.count_points}"
   end
 
   def choose_action_message

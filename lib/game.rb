@@ -54,7 +54,7 @@ class Game
     case interface.player_choose_action
     when 1
       deal_card(player)
-      @game_over = true if player.full_hand? || player.max_points?
+      @game_over = true if player.hand.full_hand? || player.hand.max_points?
     when 2
       return
     when 3
@@ -63,15 +63,15 @@ class Game
   end
 
   def dealer_turn(dealer)
-    deal_card(dealer) if dealer.points < 17
-    @game_over = true if dealer.full_hand?
+    deal_card(dealer) if dealer.hand.points < 17
+    @game_over = true if dealer.hand.full_hand?
   end
 
   def game_result
     interface.game_over_message
     interface.hand_status(@game_over, players)
-    human_points = players[:human_player].points
-    dealer_points = players[:dealer].points
+    human_points = players[:human_player].hand.points
+    dealer_points = players[:dealer].hand.points
 
     human_points != dealer_points ? win_check(human_points, dealer_points) : draw_check(human_points)
     interface.bank_total_message(players)
@@ -110,9 +110,9 @@ class Game
   end
 
   def erase_data
+    players.each_value(&:new_hand)
     @deck = Deck.new
     @game_over = false
-    players.each_value(&:erase_data)
     system 'clear'
   end
 end
