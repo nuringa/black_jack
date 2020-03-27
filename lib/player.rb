@@ -32,17 +32,6 @@ class Player
     hand.size == 3
   end
 
-  def open_hand
-    hand_status_message(self)
-    puts hand.map { |card| "#{card.rank}#{card.suite}" }.join(', ')
-    hand_points_message(self)
-  end
-
-  def hide_hand
-    hand_status_message(self)
-    puts '*** ' * hand.size
-  end
-
   def max_points?
     points == 21
   end
@@ -67,7 +56,6 @@ class Player
   end
 
   def receive_prize
-    receive_prize_message(self)
     self.bank += 20
   end
 end

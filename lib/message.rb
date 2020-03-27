@@ -46,6 +46,7 @@ module Message
 
   def win_message(player)
     puts "Congratulations #{player.name}! You have won!"
+    puts "#{player.name}, you receive your $20 prize"
   end
 
   def lose_message(player)
@@ -63,10 +64,6 @@ module Message
 
   def money_back_message
     puts 'Players get their 10$ back.'
-  end
-
-  def receive_prize_message(player)
-    puts "#{player.name}, you receive your $20 prize"
   end
 
   def bank_total_message(players)
